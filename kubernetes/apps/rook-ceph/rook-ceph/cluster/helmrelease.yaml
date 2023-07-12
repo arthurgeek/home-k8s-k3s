@@ -36,6 +36,8 @@ spec:
     ingress:
       dashboard:
         ingressClassName: nginx
+        annotations:
+          hajimari.io/icon: fa6-solid:chess-rook
         host:
           name: &host "rook.${SECRET_DOMAIN}"
           path: /
