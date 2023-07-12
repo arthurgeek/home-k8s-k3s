@@ -39,8 +39,11 @@ spec:
           - --disable-settings-authorizer=true
     app:
       ingress:
+        issuer:
+          name: letsencrypt-production
+          scope: cluster
         enabled: true
-        className: nginx
+        ingressClassName: nginx
         annotations:
           hajimari.io/icon: mdi:kubernetes
         hosts:
@@ -48,7 +51,6 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: kubernetes-dashboard-tls
     metricsScraper:
       enabled: true
     serviceMonitor:
