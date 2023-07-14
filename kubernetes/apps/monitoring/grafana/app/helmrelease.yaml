@@ -31,6 +31,8 @@ spec:
     - name: ingress-nginx
       namespace: networking
   values:
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: grafana-admin-secret
     deploymentStrategy:
       type: Recreate
     admin:
