@@ -35,6 +35,12 @@ spec:
                 - externalsecrets
               verbs:
                 - update
+            - apiGroups:
+                - ""
+              resources:
+                - namespaces
+              verbs:
+                - update
 
     cleanupController:
       serviceMonitor:
@@ -55,5 +61,11 @@ spec:
                 - "external-secrets.io"
               resources:
                 - externalsecrets
+              verbs:
+                - update
+            - apiGroups:
+                - ""
+              resources:
+                - namespaces
               verbs:
                 - update
