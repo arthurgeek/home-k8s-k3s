@@ -10,3 +10,4 @@ resources:
   - ./goldilocks/ks.yaml
   - ./smartctl-exporter/ks.yaml
   - ./speedtest-exporter/ks.yaml
+  - ./prometheus-nut-exporter/ks.yaml

@@ -120,6 +120,10 @@ spec:
           gnetId: 1860 # https://grafana.com/grafana/dashboards/1860?tab=revisions
           revision: 31
           datasource: Prometheus
+        nut-exporter:
+          gnetId: 14371
+          revision: 1
+          datasource: Prometheus
       cilium:
         cilium-dashboard:
           url: https://raw.githubusercontent.com/cilium/cilium/v1.13.2/examples/kubernetes/addons/prometheus/files/grafana-dashboards/cilium-dashboard.json
@@ -166,8 +170,7 @@ spec:
           gnetId: 11454
           revision: 14
           datasource: Prometheus
-      nginx:
-        nginx:
+        ingress-nginx:
           url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
           datasource: Prometheus
         nginx-request-handling-performance:
