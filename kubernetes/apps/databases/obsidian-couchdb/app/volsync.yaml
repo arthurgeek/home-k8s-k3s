@@ -40,7 +40,7 @@ apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
   name: obsidian-couchdb
-  namespace: selfhosted
+  namespace: databases
 spec:
   sourcePVC: data-obsidian-couchdb-0
   trigger:
