@@ -1,0 +1,14 @@
+---
+kubernetes:
+  children:
+    master:
+      hosts:
+        k8s-0:
+          ansible_user: arthur
+          ansible_host: 192.168.1.50
+        k8s-1:
+          ansible_user: arthur
+          ansible_host: 192.168.1.51
+        k8s-2:
+          ansible_user: arthur
+          ansible_host: 192.168.1.52
