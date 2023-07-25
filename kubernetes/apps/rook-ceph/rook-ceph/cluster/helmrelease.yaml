@@ -101,10 +101,10 @@ spec:
             memory: "6000M"
         mgr-sidecar:
           requests:
-            cpu: "50m"
+            cpu: "100m"
             memory: "100M"
           limits:
-            memory: "210M"
+            memory: "300M"
         crashcollector:
           requests:
             cpu: "15m"
