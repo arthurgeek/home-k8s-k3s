@@ -15,6 +15,15 @@ spec:
         name: tf-controller
         namespace: flux-system
       interval: 30m
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
 
   values:
     installCRDs: true
@@ -23,3 +32,7 @@ spec:
       serviceMonitor:
         enabled: true
         interval: 1m
+    runner:
+      image:
+        repository: ghcr.io/arthurgeek/tf-runner-bitwarden
+        tag: sha-360254599b877e62de3a1ff6be610f8f090cfbae
