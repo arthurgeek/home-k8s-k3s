@@ -172,6 +172,5 @@ spec:
             - *host
     persistence:
       enabled: true
-      storageClassName: local-path
     testFramework:
       enabled: false

@@ -138,7 +138,6 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: local-path
               resources:
                 requests:
                   storage: 10Gi
