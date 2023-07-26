@@ -5,4 +5,4 @@ namespace: flux-system
 resources:
   - ./gitrepository.yaml
   - ./secrets.sops.yaml
-  # - ./minio.yaml
+  - ./minio.yaml
