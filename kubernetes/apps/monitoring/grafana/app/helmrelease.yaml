@@ -110,6 +110,10 @@ spec:
             url: http://kube-prometheus-stack-alertmanager.monitoring.svc.cluster.local:9093
             jsonData:
               implementation: prometheus
+          - access: proxy
+            name: Loki
+            type: loki
+            url: http://loki-gateway.monitoring.svc.cluster.local:80
     dashboards:
       default:
         cloudflared:
