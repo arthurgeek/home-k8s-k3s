@@ -12,7 +12,7 @@ spec:
     disable: true
   cliConfigSecretRef:
     name: tf-cli-config
-  path: ./terraform/minio-buckets
+  path: ./terraform/minio
   sourceRef:
     kind: GitRepository
     name: home-terraform
