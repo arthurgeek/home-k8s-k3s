@@ -22,7 +22,8 @@ terraform {
 
 locals {
   buckets = [
-    "postgres"
+    "postgres",
+    "loki"
   ]
 }
 
