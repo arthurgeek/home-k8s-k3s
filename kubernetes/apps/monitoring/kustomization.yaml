@@ -11,5 +11,5 @@ resources:
   - ./smartctl-exporter/ks.yaml
   - ./speedtest-exporter/ks.yaml
   - ./prometheus-nut-exporter/ks.yaml
-  # - ./loki/ks.yaml
-  # - ./vector/ks.yaml
+  - ./loki/ks.yaml
+  - ./vector/ks.yaml
