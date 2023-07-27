@@ -7,6 +7,6 @@ provisioner: nfs.csi.k8s.io
 parameters:
   server: 192.168.1.100
   share: /volume2/k8s-data
-reclaimPolicy: Delete
+reclaimPolicy: Retain
 volumeBindingMode: Immediate
 mountOptions: ["nfsvers=4.1", "nconnect=8", "hard", "noatime"]
