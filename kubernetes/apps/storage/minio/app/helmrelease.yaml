@@ -122,10 +122,7 @@ spec:
       data:
         enabled: true
         type: pvc
-        accessMode: ReadWriteMany
-        storageClass: nas
-        size: 50Gi
-        retain: true
+        existingClaim: minio-nfs
 
     resources:
       requests:
