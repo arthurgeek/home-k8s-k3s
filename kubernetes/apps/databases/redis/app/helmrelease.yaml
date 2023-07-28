@@ -82,8 +82,8 @@ spec:
           failureThreshold: 5
     resources:
       requests:
-        memory: 204Mi
+        memory: 200Mi
       limits:
-        memory: 241Mi
+        memory: 400Mi
     env:
       REDIS_PORT: "6379"
