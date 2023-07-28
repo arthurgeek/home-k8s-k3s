@@ -12,3 +12,4 @@ resources:
   - ./external-secrets/ks.yaml
   - ./intel-device-plugin/ks.yaml
   - ./node-feature-discovery/ks.yaml
+  - ./descheduler/ks.yaml
