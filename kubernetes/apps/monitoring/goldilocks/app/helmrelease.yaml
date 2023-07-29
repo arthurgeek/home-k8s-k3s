@@ -30,10 +30,10 @@ spec:
     controller:
       resources:
         requests:
-          cpu: 25m
+          cpu: 45m
           memory: 50Mi
         limits:
-          cpu: 500m
+          cpu: 750m
           memory: 200Mi
     dashboard:
       replicaCount: 1
