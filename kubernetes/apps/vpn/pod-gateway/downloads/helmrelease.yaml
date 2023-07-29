@@ -20,7 +20,7 @@ spec:
     image:
       repository: ghcr.io/bjw-s/pod-gateway
       # TODO: change to a release once a new version is released
-      tag: dev@sha256:60bff750c499a3f5424e5ce2627ce851585bc4b9c26966a11c1d3cb18f1c47cf
+      tag: dev@sha256:a6e35b081c4e45c8afa01180318503094223afc3c11e9ff0ee362451f480abb9
 
     DNS: 172.16.1.1
 
