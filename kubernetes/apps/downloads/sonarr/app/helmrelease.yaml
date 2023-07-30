@@ -1,0 +1,81 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: sonarr
+  namespace: downloads
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.1
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  values:
+    controller:
+      annotations:
+        reloader.stakater.com/auto: "true"
+
+    image:
+      repository: ghcr.io/onedr0p/sonarr-develop
+      tag: 4.0.0.582@sha256:40fda381027aaabda917a25b1dd62e9c73ffd53caf3ec2e2244b11d5da95f17f
+
+    podAnnotations:
+      setGateway: "true"
+
+    podSecurityContext:
+      runAsUser: 1030
+      runAsGroup: 100
+      fsGroup: 100
+      fsGroupChangePolicy: "OnRootMismatch"
+
+    env:
+      TZ: ${TIMEZONE}
+      SONARR__INSTANCE_NAME: Sonarr
+      SONARR__PORT: &port 8989
+      SONARR__API_KEY:
+        valueFrom:
+          secretKeyRef:
+            name: sonarr-secret
+            key: api-key
+
+    service:
+      main:
+        ports:
+          http:
+            port: *port
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "nginx"
+        annotations:
+          hajimari.io/icon: mdi:television-classic
+        hosts:
+          - host: &host "sonarr.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+        tls:
+          - hosts:
+              - *host
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: sonarr-config
+      data:
+        enabled: true
+        type: pvc
+        existingClaim: data
+
+    resources:
+      requests:
+        cpu: 20m
+        memory: 300M
+      limits:
+        memory: 500M
