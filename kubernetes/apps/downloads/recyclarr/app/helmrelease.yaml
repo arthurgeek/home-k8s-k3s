@@ -1,0 +1,54 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: recyclarr
+  namespace: default
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.1
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  values:
+    controller:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
+
+    restartPolicy: OnFailure
+
+    image:
+      repository: ghcr.io/recyclarr/recyclarr
+      tag: 5.1.1@sha256:4b2c5487132b90e402dc0b7075efe02c5c312bb13727226425c41e48028182dc
+
+    podAnnotations:
+      setGateway: "true"
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: recyclarr-config
+
+    podSecurityContext:
+      runAsUser: 1030
+      runAsGroup: 100
+      fsGroup: 100
+      fsGroupChangePolicy: OnRootMismatch
+
+    resources:
+      requests:
+        cpu: 5m
+        memory: 40M
+      limits:
+        memory: 128M
+
+    service:
+      main:
+        enabled: false
