@@ -1,0 +1,57 @@
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: qbittorrent-restic
+  namespace: downloads
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: bitwarden-fields
+  target:
+    name: qbittorrent-restic-secret
+    creationPolicy: Owner
+    template:
+      engineVersion: v2
+      data:
+        RESTIC_REPOSITORY: '{{ index . "repository-template" }}/qbittorrent'
+        RESTIC_PASSWORD: '{{ index . "restic-password" }}'
+        AWS_ACCESS_KEY_ID: '{{ index . "access-key" }}'
+        AWS_SECRET_ACCESS_KEY: '{{ index . "secret-key" }}'
+  data:
+    - secretKey: repository-template
+      remoteRef:
+        key: &restic-key 2ec2b424-eb72-46eb-9946-7b83a370d3bd
+        property: repository-template
+    - secretKey: restic-password
+      remoteRef:
+        key: *restic-key
+        property: restic-password
+    - secretKey: access-key
+      remoteRef:
+        key: &s3-key d572f8f8-7927-4359-a427-ec6aa7ff2fbc
+        property: access-key
+    - secretKey: secret-key
+      remoteRef:
+        key: *s3-key
+        property: secret-key
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: qbittorrent
+  namespace: downloads
+spec:
+  sourcePVC: config-qbittorrent-0
+  trigger:
+    schedule: "0 */12 * * *"
+  restic:
+    copyMethod: Snapshot
+    pruneIntervalDays: 14
+    repository: qbittorrent-restic-secret
+    moverSecurityContext:
+      runAsUser: 1030
+      runAsGroup: 100
+      fsGroup: 100
+    retain:
+      daily: 14

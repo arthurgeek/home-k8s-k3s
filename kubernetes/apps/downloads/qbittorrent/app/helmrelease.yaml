@@ -1,0 +1,111 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: qbittorrent
+  namespace: downloads
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+
+  values:
+    controller:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
+
+    image:
+      repository: ghcr.io/onedr0p/qbittorrent
+      tag: 4.5.4
+
+    podAnnotations:
+      setGateway: "true"
+
+    env:
+      TZ: ${TIMEZONE}
+      QBITTORRENT__PORT: &port 8080
+
+    hostname: qbittorrent-0
+
+    service:
+      main:
+        ports:
+          http:
+            port: *port
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          hajimari.io/icon: "cloud-download"
+        hosts:
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+
+    metrics:
+      enabled: true
+      exporter:
+        image:
+          repository: ghcr.io/k8s-at-home/prometheus-qbittorrent-exporter
+          tag: v1.2.0
+      serviceMonitor:
+        interval: 1m
+        scrapeTimeout: 10s
+      prometheusRule:
+        enabled: true
+
+    podSecurityContext:
+      runAsUser: 1030
+      runAsGroup: 100
+      fsGroup: 100
+      fsGroupChangePolicy: OnRootMismatch
+
+    volumeClaimTemplates:
+      - name: config
+        mountPath: /config
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: ceph-block
+
+    persistence:
+      torrents:
+        enabled: true
+        type: pvc
+        existingClaim: torrents
+        mountPath: /data/Downloads/torrents
+
+    resources:
+      requests:
+        cpu: 25m
+        memory: 1G
+      limits:
+        memory: 2G
+
+    sidecars:
+      reannounce:
+        image: ghcr.io/buroa/qbittools:v0.1.1
+        imagePullPolicy: IfNotPresent
+        args: ["reannounce", "-s", "localhost", "-p", "8080"]

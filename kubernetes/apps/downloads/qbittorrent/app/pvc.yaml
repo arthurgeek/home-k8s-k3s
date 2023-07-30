@@ -1,0 +1,41 @@
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: torrents
+provisioner: nfs
+parameters:
+  archiveOnDelete: "false"
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: torrents
+spec:
+  storageClassName: torrents
+  capacity:
+    storage: 1Mi # doesn't matter
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: "${SECRET_NAS_HOST}"
+    path: "${SECRET_MEDIA_PATH}/Downloads/torrents"
+  mountOptions:
+    - nfsvers=4.1
+    - nconnect=8
+    - hard
+    - noatime
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: torrents
+  namespace: storage
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: torrents
+  resources:
+    requests:
+      storage: 1Mi # doesn't matter
