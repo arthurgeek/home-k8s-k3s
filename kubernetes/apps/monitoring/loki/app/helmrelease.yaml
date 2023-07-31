@@ -137,7 +137,7 @@ spec:
         tag: 1.25-alpine
       ingress:
         enabled: true
-        ingressClassName: nginx
+        ingressClassName: internal
         annotations:
           hajimari.io/enable: "false"
         hosts:

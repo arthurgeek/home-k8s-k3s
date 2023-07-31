@@ -18,7 +18,6 @@ spec:
         namespace: flux-system
   maxHistory: 2
   install:
-    createNamespace: true
     remediation:
       retries: 3
   upgrade:
@@ -35,7 +34,7 @@ spec:
 
     ingress:
       dashboard:
-        ingressClassName: nginx
+        ingressClassName: internal
         annotations:
           hajimari.io/icon: fa6-solid:chess-rook
         host:
