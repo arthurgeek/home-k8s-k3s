@@ -59,9 +59,8 @@ spec:
                 targetLabel: target
 
     resources:
-      limits:
-        cpu: "10m"
-        memory: "15Mi"
       requests:
         cpu: "1m"
         memory: "8Mi"
+      limits:
+        memory: "15Mi"
