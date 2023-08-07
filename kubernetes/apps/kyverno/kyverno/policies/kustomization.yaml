@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - ./add-refresh-interval-to-external-secrets.yaml
   - ./enable-goldilock-on-all-namespaces.yaml
+  - ./remove-cpu-limits.yaml
