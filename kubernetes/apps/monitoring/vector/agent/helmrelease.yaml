@@ -104,8 +104,10 @@ spec:
 
     resources:
       requests:
-        cpu: 25m
-        memory: 250M
+        cpu: 10m
+        memory: 295M
+      limits:
+        memory: 1902M
 
     securityContext:
       privileged: true

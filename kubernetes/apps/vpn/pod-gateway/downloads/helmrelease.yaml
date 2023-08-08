@@ -55,8 +55,8 @@ spec:
                 key: SERVER_HOSTNAMES
         resources:
           requests:
-            cpu: 5m
-            memory: 64M
+            cpu: 10m
+            memory: 78M
           limits:
             memory: 128M
         securityContext:
@@ -68,10 +68,10 @@ spec:
         enabled: true
         resources:
           requests:
-            cpu: 5m
+            cpu: 10m
             memory: 10M
           limits:
-            memory: 10M
+            memory: 65M
 
     podAnnotations:
       reloader.stakater.com/auto: "true"

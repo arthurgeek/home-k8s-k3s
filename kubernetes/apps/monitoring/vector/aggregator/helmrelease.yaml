@@ -64,3 +64,10 @@ spec:
         enabled: true
         type: emptyDir
         mountPath: /vector-data-dir
+
+    resources:
+      requests:
+        cpu: 10m
+        memory: 224M
+      limits:
+        memory: 1221M

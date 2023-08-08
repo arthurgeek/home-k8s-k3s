@@ -61,9 +61,29 @@ spec:
         prometheus:
           serviceMonitor:
             enabled: true
+        resources:
+          requests:
+            cpu: 10m
+            memory: 50M
+          limits:
+            memory: 248M
       ui:
         enabled: true
         rollOutPods: true
+        backend:
+          resources:
+            requests:
+              cpu: 10m
+              memory: 24M
+            limits:
+              memory: 118M
+        frontend:
+          resources:
+            requests:
+              cpu: 10m
+              memory: 16M
+            limits:
+              memory: 58M
         ingress:
           enabled: true
           className: internal
@@ -113,3 +133,8 @@ spec:
     securityContext:
       privileged: true
     tunnel: disabled
+
+    resources:
+      requests:
+        cpu: 10m
+        memory: 78M

@@ -111,6 +111,12 @@ spec:
               resources:
                 requests:
                   storage: 1Gi
+        resources:
+          requests:
+            cpu: 10m
+            memory: 24M
+          limits:
+            memory: 269M
     grafana:
       enabled: false
       forceDeployDashboards: true

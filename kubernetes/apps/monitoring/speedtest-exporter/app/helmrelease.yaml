@@ -31,7 +31,7 @@ spec:
             port: 9798
     resources:
       requests:
-        cpu: 15m
-        memory: 50M
+        cpu: 10m
+        memory: 63M
       limits:
-        memory: 100M
+        memory: 345M

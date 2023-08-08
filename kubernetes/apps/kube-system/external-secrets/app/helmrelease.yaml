@@ -33,7 +33,25 @@ spec:
       serviceMonitor:
         enabled: true
         interval: 1m
+      resources:
+        requests:
+          cpu: 10m
+          memory: 64M
+        limits:
+          memory: 318M
     certController:
       serviceMonitor:
         enabled: true
         interval: 1m
+      resources:
+        requests:
+          cpu: 10m
+          memory: 109M
+        limits:
+          memory: 550M
+    resources:
+      requests:
+        cpu: 22m
+        memory: 144M
+      limits:
+        memory: 724M
