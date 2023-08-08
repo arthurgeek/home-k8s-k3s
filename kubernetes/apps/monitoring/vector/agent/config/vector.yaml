@@ -24,6 +24,8 @@ sinks:
   kubernetes_sink:
     type: vector
     compression: true
+    batch:
+      max_bytes: 2049000
     inputs:
       - kubernetes_logs
     address: vector-aggregator.monitoring.svc.cluster.local:6000
@@ -32,8 +34,9 @@ sinks:
   journald_sink:
     type: vector
     compression: true
+    batch:
+      max_bytes: 2049000
     version: "2"
     address: vector-aggregator.monitoring.svc.cluster.local:6001
     inputs:
       - journald_logs
-
