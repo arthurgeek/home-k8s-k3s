@@ -73,7 +73,6 @@ spec:
           namespaceSelector:
             any: true
       extraArgs:
-        extraArgs:
         default-ssl-certificate: "networking/${SECRET_DOMAIN/./-}-production-tls"
       topologySpreadConstraints:
         - maxSkew: 1
