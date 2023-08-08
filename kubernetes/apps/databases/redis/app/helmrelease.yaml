@@ -79,10 +79,13 @@ spec:
           periodSeconds: 5
           successThreshold: 1
           failureThreshold: 5
+
     resources:
       requests:
-        memory: 200Mi
+        cpu: 10m
+        memory: 475M
       limits:
-        memory: 400Mi
+        memory: 1219M
+
     env:
       REDIS_PORT: "6379"

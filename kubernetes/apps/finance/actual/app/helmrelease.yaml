@@ -59,9 +59,10 @@ spec:
         type: pvc
         accessMode: ReadWriteOnce
         size: 100Mi
+
     resources:
       requests:
-        cpu: 15m
-        memory: 80Mi
+        cpu: 10m
+        memory: 50M
       limits:
-        memory: 256Mi
+        memory: 164M

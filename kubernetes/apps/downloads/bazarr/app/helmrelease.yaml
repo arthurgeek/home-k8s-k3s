@@ -91,10 +91,10 @@ spec:
 
     resources:
       requests:
-        cpu: 25m
-        memory: 200M
+        cpu: 10m
+        memory: 204M
       limits:
-        memory: 1Gi
+        memory: 524M
 
     sidecars:
       subcleaner:
@@ -107,3 +107,10 @@ spec:
           - --root=/add-ons
         volumeMounts:
           - { name: add-ons, mountPath: /add-ons }
+
+        resources:
+          requests:
+            cpu: 10m
+            memory: 37M
+          limits:
+            memory: 94M

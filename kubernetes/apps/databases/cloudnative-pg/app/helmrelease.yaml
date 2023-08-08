@@ -28,9 +28,10 @@ spec:
     image:
       repository: ghcr.io/cloudnative-pg/cloudnative-pg
       tag: 1.20.2
+
     resources:
       requests:
-        cpu: 15m
-        memory: 150Mi
+        cpu: 10m
+        memory: 163M
       limits:
-        memory: 200Mi
+        memory: 418M

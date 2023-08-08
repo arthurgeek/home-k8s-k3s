@@ -100,3 +100,10 @@ spec:
         mountPath: /opt/couchdb/data
         accessMode: ReadWriteOnce
         size: 1Gi
+
+    resources:
+      requests:
+        cpu: 34m
+        memory: 127M
+      limits:
+        memory: 325M

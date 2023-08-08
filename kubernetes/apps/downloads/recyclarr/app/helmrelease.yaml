@@ -44,10 +44,10 @@ spec:
 
     resources:
       requests:
-        cpu: 5m
-        memory: 40M
+        cpu: 10m
+        memory: 37M
       limits:
-        memory: 128M
+        memory: 94M
 
     service:
       main:

@@ -15,11 +15,15 @@ spec:
         name: backube
         namespace: flux-system
       interval: 30m
+
   values:
     manageCRDs: true
     metrics:
       disableAuth: true
-    requests:
+
+    resources:
       requests:
         cpu: 10m
-        memory: 70m
+        memory: 127M
+      limits:
+        memory: 324M

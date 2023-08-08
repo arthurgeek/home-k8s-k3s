@@ -52,13 +52,18 @@ spec:
         tls:
           - hosts:
               - *host
+
     podAnnotations:
       configmap.reloader.stakater.com/reload: hajimari-settings
+
     persistence:
       data:
         enabled: true
         type: emptyDir
+
     resources:
       requests:
-        cpu: 100m
-        memory: 128M
+        cpu: 10m
+        memory: 37M
+      limits:
+        memory: 93M
