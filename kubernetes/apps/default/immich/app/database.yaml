@@ -1,0 +1,47 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgresql.cnpg.io/cluster_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: immich-db
+  namespace: default
+spec:
+  instances: 1
+  imageName: ghcr.io/cloudnative-pg/postgresql:15.3
+  primaryUpdateStrategy: unsupervised
+  storage:
+    size: 5Gi
+  resources:
+    requests:
+      memory: 200Mi
+      cpu: 200m
+    limits:
+      memory: 500Mi
+  monitoring:
+    enablePodMonitor: true
+  bootstrap:
+    initdb:
+      database: &app immich
+      owner: *app
+      dataChecksums: true
+  backup:
+    barmanObjectStore:
+      destinationPath: "s3://postgres"
+      endpointURL: "http://minio.storage.svc.cluster.local:9000"
+      s3Credentials:
+        accessKeyId:
+          name: immich-s3-secret
+          key: S3_ACCESS_KEY
+        secretAccessKey:
+          name: immich-s3-secret
+          key: S3_SECRET_KEY
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: immich-backup
+spec:
+  schedule: "0 0 0 * * *"
+  backupOwnerReference: self
+  cluster:
+    name: immich-db
