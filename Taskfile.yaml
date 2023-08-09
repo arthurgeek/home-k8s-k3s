@@ -21,10 +21,10 @@ includes:
   ansible: .taskfiles/AnsibleTasks.yaml
   brew: .taskfiles/BrewTasks.yaml
   cluster: .taskfiles/ClusterTasks.yaml
+  externalsecrets: .taskfiles/ExternalSecretsTasks.yaml
   volsync: .taskfiles/VolSync/Tasks.yaml
 
 tasks:
-
   default: task -l
 
   deps:
