@@ -1,0 +1,48 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: portainer
+  namespace: networking
+  annotations:
+    hajimari.io/icon: simple-icons:portainer
+spec:
+  ingressClassName: internal
+  rules:
+    - host: &host portainer.${SECRET_DOMAIN}
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: portainer
+                port:
+                  number: 9000
+  tls:
+    - hosts:
+        - *host
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: portainer
+  namespace: networking
+subsets:
+  - addresses:
+      - ip: ${SECRET_NAS_HOST}
+    ports:
+      - name: http
+        port: 9000
+        protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: portainer
+  namespace: networking
+spec:
+  ports:
+    - name: http
+      port: 9000
+  type: ClusterIP
