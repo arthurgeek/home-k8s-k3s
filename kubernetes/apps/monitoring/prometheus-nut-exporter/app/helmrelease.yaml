@@ -33,7 +33,7 @@ spec:
       strategy: RollingUpdate
 
     env:
-      TZ: ${TZ}
+      TZ: ${TIMEZONE}
       HTTP_PATH: /metrics
 
     service:

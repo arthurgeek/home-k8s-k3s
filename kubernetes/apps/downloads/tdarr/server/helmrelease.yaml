@@ -35,7 +35,7 @@ spec:
       pullPolicy: IfNotPresent
 
     env:
-      TZ: ${TZ}
+      TZ: ${TIMEZONE}
       PUID: 1030
       PGID: 100
 
