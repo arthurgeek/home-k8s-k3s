@@ -1,0 +1,85 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: tdarr-node
+  namespace: downloads
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.1
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+
+  values:
+    controller:
+      type: daemonset
+
+    image:
+      repository: ghcr.io/haveagitgat/tdarr_node
+      tag: 2.00.25
+      pullPolicy: IfNotPresent
+
+    env:
+      TZ: ${TZ}
+      PUID: 1030
+      PGID: 100
+      serverIP: tdarr-server.downloads.svc.cluster.local
+      serverPort: 8266
+      nodeName:
+        valueFrom:
+          fieldRef:
+            fieldPath: spec.nodeName
+
+    service:
+      main:
+        enabled: false
+
+    podSecurityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 100
+      fsGroupChangePolicy: "OnRootMismatch"
+      supplementalGroups:
+        - 100
+      capabilities:
+        add:
+          - CHOWN
+
+    persistence:
+      cache:
+        enabled: true
+        type: pvc
+        existingClaim: tdarr-cache
+      media:
+        enabled: true
+        type: pvc
+        existingClaim: data
+
+    resources:
+      requests:
+        cpu: 10m
+        memory: 250Mi
+        gpu.intel.com/i915: 1
+      limits:
+        gpu.intel.com/i915: 1
+
+    nodeSelector:
+      intel.feature.node.kubernetes.io/gpu: "true"

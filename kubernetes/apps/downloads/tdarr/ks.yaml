@@ -1,0 +1,34 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-apps-tdarr-server
+  namespace: flux-system
+spec:
+  path: ./kubernetes/apps/downloads/tdarr/server
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  wait: false
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-apps-tdarr-node
+  namespace: flux-system
+spec:
+  path: ./kubernetes/apps/downloads/tdarr/node
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  wait: true
+  dependsOn:
+    - name: cluster-apps-tdarr-server
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
