@@ -23,6 +23,7 @@ includes:
   cluster: .taskfiles/ClusterTasks.yaml
   externalsecrets: .taskfiles/ExternalSecretsTasks.yaml
   volsync: .taskfiles/VolSync/Tasks.yaml
+  cnpg: .taskfiles/CNPG/Tasks.yaml
 
 tasks:
   default: task -l

@@ -1,0 +1,8 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Backup
+metadata:
+  name: "backup-${cluster}-${ts}"
+  namespace: "${namespace}"
+spec:
+  cluster:
+    name: "${cluster}"

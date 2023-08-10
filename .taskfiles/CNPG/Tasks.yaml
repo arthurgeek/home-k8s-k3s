@@ -1,0 +1,30 @@
+---
+version: "3"
+
+x-task-vars: &task-vars
+  cluster: "{{.cluster}}"
+  namespace: "{{.namespace}}"
+  ts: "{{.ts}}"
+
+vars:
+  backupTemplate: "{{.ROOT_DIR}}/.taskfiles/CNPG/Backup.tmpl.yaml"
+  start: '{{now | date "2006-01-02T15:04:05Z07:00"}}'
+  ts: '{{.start | date "150405"}}'
+
+tasks:
+  backup:
+    desc: Trigger a CNPG on-demand backup (ex. task cnpg:backup cluster=example [namespace=default])
+    cmds:
+      - envsubst < <(cat {{.backupTemplate}}) | kubectl apply -f -
+      - kubectl -n {{.namespace}} wait backup/backup-{{.cluster}}-{{.ts}} --for=jsonpath=.status.phase=completed --timeout=5m
+      - kubectl -n {{.namespace}} logs {{.podName}} --container postgres --since-time {{.start}}
+      - kubectl -n {{.namespace}} delete backup backup-{{.cluster}}-{{.ts}}
+    env: *task-vars
+    vars:
+      cluster: '{{ or .cluster (fail "Cluster `cluster` is required") }}'
+      namespace: '{{.namespace | default "default"}}'
+      podName:
+        sh: kubectl -n {{.namespace}} get clusters {{.cluster}} -o jsonpath='{.status.currentPrimary}'
+    preconditions:
+      - sh: kubectl -n {{.namespace}} get clusters {{.cluster}}
+        msg: "Cluster '{{.cluster}}' not found in namespace '{{.namespace}}'"
