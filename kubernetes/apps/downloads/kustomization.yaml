@@ -11,3 +11,4 @@ resources:
   - ./recyclarr/ks.yaml
   - ./bazarr/ks.yaml
   - ./tdarr/ks.yaml
+  - ./flaresolverr/ks.yaml
