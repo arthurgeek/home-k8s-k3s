@@ -6,3 +6,4 @@ resources:
   - ./hajimari/ks.yaml
   - ./immich/ks.yaml
   - ./plex/ks.yaml
+  - ./tautulli/ks.yaml
