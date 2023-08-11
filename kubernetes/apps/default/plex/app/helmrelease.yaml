@@ -1,0 +1,110 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: plex
+  namespace: default
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+
+  dependsOn:
+    - name: intel-device-plugin-gpu
+      namespace: kube-system
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: volsync
+      namespace: backup
+
+  values:
+    controller:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
+
+    image:
+      repository: ghcr.io/onedr0p/plex-beta
+      tag: 1.32.6.7371-b6a09ad81@sha256:437685fa85bee0731f36610b473b807aad436ca2408815018002206f9abf6fe6
+
+    env:
+      TZ: "${TIMEZONE}"
+      PLEX_CLAIM:
+        valueFrom:
+          secretKeyRef:
+            name: plex-secret
+            key: claim
+
+    service:
+      main:
+        ports:
+          http:
+            port: 32400
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: internal
+        annotations:
+          hajimari.io/icon: mdi:plex
+        hosts:
+          - host: &host "plex.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+
+    podSecurityContext:
+      runAsUser: 1030
+      runAsGroup: 100
+      fsGroup: 100
+      fsGroupChangePolicy: "OnRootMismatch"
+
+    volumeClaimTemplates:
+      - name: config
+        mountPath: /config
+        accessMode: ReadWriteOnce
+        size: 10Gi
+        storageClass: ceph-block
+
+    persistence:
+      data:
+        enabled: true
+        type: nfs
+        server: "${SECRET_NAS_HOST}"
+        path: "${SECRET_MEDIA_PATH}"
+        readOnly: true
+
+      transcode:
+        enabled: true
+        type: emptyDir
+
+    nodeSelector:
+      intel.feature.node.kubernetes.io/gpu: "true"
+
+    resources:
+      requests:
+        gpu.intel.com/i915: 1
+        cpu: 100m
+        memory: 2000Mi
+      limits:
+        gpu.intel.com/i915: 1
