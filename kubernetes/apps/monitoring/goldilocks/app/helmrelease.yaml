@@ -38,6 +38,8 @@ spec:
       ingress:
         enabled: true
         ingressClassName: internal
+        annotations:
+          hajimari.io/icon: mdi:align-vertical-top
         hosts:
           - host: &host "goldilocks.${SECRET_DOMAIN}"
             paths:
