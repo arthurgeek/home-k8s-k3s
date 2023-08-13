@@ -57,8 +57,7 @@ spec:
       runAsGroup: 0
       fsGroup: 100
       fsGroupChangePolicy: "OnRootMismatch"
-      supplementalGroups:
-        - 100
+      supplementalGroups: [44, 105]
       capabilities:
         add:
           - CHOWN
