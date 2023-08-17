@@ -101,8 +101,6 @@ spec:
       requests:
         cpu: 10m
         memory: 37M
-      limits:
-        memory: 94M
 
     sidecars:
       reannounce:
