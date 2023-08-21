@@ -14,6 +14,7 @@ spec:
         kind: HelmRepository
         name: kubernetes-dashboard
         namespace: flux-system
+
   maxHistory: 2
   install:
     remediation:
@@ -24,58 +25,36 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  values:
-    api:
-      containers:
-        resources:
-          requests:
-            cpu: 10m
-            memory: 32M
-          limits:
-            memory: 128M
-        args:
-          - --enable-insecure-login=true
-          - --enable-skip-login=true
-          - --disable-settings-authorizer=true
-    app:
-      ingress:
-        issuer:
-          name: letsencrypt-production
-          scope: cluster
-        enabled: true
-        ingressClassName: internal
-        annotations:
-          hajimari.io/icon: mdi:kubernetes
-        hosts:
-          - &host "kubernetes.${SECRET_DOMAIN}"
-        tls:
-          - hosts:
-              - *host
 
-    web:
-      containers:
-        resources:
-          requests:
-            cpu: 10m
-            memory: 32M
-          limits:
-            memory: 128M
+  values:
+    extraArgs:
+      - --enable-insecure-login
+      - --enable-skip-login
+      - --disable-settings-authorizer
+
+    ingress:
+      enabled: true
+      className: internal
+      annotations:
+        hajimari.io/icon: mdi:kubernetes
+      hosts:
+        - &host "kubernetes.${SECRET_DOMAIN}"
+      tls:
+        - hosts:
+            - *host
+
+    resources:
+      requests:
+        cpu: 10m
+        memory: 32M
+      limits:
+        memory: 128M
 
     metricsScraper:
       enabled: true
-      containers:
-        resources:
-          requests:
-            cpu: 10m
-            memory: 36M
-          limits:
-            memory: 197M
-
-    serviceMonitor:
-      enabled: false
-    cert-manager:
-      enabled: false
-    nginx:
-      enabled: false
-    metrics-server:
-      enabled: false
+      resources:
+        requests:
+          cpu: 10m
+          memory: 36M
+        limits:
+          memory: 197M
