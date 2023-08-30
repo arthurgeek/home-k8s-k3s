@@ -6,7 +6,6 @@ vars:
   ANSIBLE_INVENTORY_DIR: "{{.ANSIBLE_DIR}}/inventory"
 
 tasks:
-
   prepare:
     desc: Prepare all the k8s nodes for running k3s
     dir: "{{.ANSIBLE_DIR}}"
@@ -21,6 +20,11 @@ tasks:
     desc: Preform operating system updates and rollout restart the cluster
     dir: "{{.ANSIBLE_DIR}}"
     cmd: ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yaml {{.ANSIBLE_PLAYBOOK_DIR}}/cluster-rollout-update.yaml
+
+  upgrade-kube-vip:
+    desc: Upgrade kube-vip
+    dir: "{{.ANSIBLE_DIR}}"
+    cmd: ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yaml {{.ANSIBLE_PLAYBOOK_DIR}}/cluster-kube-vip.yaml
 
   nuke:
     desc: Uninstall Kubernetes on the nodes
