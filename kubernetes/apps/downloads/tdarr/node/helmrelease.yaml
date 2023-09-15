@@ -34,7 +34,7 @@ spec:
 
     image:
       repository: ghcr.io/haveagitgat/tdarr_node
-      tag: 2.10.02
+      tag: 2.11.01
       pullPolicy: IfNotPresent
 
     env:
