@@ -83,11 +83,6 @@ spec:
           enable_api: true
           enable_alertmanager_v2: true
           alertmanager_url: http://kube-prometheus-stack-alertmanager.monitoring.svc.cluster.local:9093
-          storage:
-            type: local
-            local:
-              directory: /rules
-          rule_path: /rules
           ring:
             kvstore:
               store: memberlist
@@ -177,12 +172,6 @@ spec:
                 topologyKey: kubernetes.io/hostname
       persistence:
         storageClass: local-path
-      extraVolumeMounts:
-        - name: rules
-          mountPath: /rules
-      extraVolumes:
-        - name: rules
-          emptyDir: {}
 
     backend:
       replicas: 2
@@ -195,12 +184,6 @@ spec:
                   matchLabels:
                     {{- include "loki.backendSelectorLabels" . | nindent 12 }}
                 topologyKey: kubernetes.io/hostname
-      extraVolumeMounts:
-        - name: rules
-          mountPath: /rules
-      extraVolumes:
-        - name: rules
-          emptyDir: {}
       persistence:
         size: 20Gi
         storageClass: local-path
