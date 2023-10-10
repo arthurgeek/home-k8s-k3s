@@ -27,7 +27,7 @@ spec:
   values:
     image:
       repository: ghcr.io/actualbudget/actual-server
-      tag: 23.9.0
+      tag: 23.10.0
     env:
       TZ: ${TIMEZONE}
     envFrom:
