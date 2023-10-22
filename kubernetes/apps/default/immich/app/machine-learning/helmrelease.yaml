@@ -39,7 +39,7 @@ spec:
 
     image:
       repository: ghcr.io/immich-app/immich-machine-learning
-      tag: v1.81.1@sha256:57d43ec959f5b1fcc80e7ca4d27cbc1758701ab5af01399a99eb111393dce912
+      tag: v1.82.1@sha256:9ff5a57031bcf687b2d222f5f473279ae5e47908d38da70c568c95b211227667
 
     env:
       DB_HOSTNAME: "immich-db-rw.default.svc.cluster.local"
