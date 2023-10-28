@@ -27,7 +27,7 @@ spec:
   values:
     image:
       repository: ghcr.io/cloudnative-pg/cloudnative-pg
-      tag: 1.20.2
+      tag: 1.21.0
 
     resources:
       requests:
