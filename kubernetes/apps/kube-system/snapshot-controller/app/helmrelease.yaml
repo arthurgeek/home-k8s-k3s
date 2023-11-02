@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: snapshot-controller
-      version: 1.9.1
+      version: 2.0.0
       sourceRef:
         kind: HelmRepository
         name: piraeus
@@ -27,18 +27,19 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    volumeSnapshotClasses:
-      - name: csi-ceph-blockpool
-        driver: rook-ceph.rbd.csi.ceph.com
-        annotations:
-          snapshot.storage.kubernetes.io/is-default-class: "true"
-        parameters:
-          clusterID: rook-ceph
-          csi.storage.k8s.io/snapshotter-secret-name: rook-csi-rbd-provisioner
-          csi.storage.k8s.io/snapshotter-secret-namespace: rook-ceph
-        deletionPolicy: Delete
-    serviceMonitor:
-      create: true
+    controller:
+      volumeSnapshotClasses:
+        - name: csi-ceph-blockpool
+          driver: rook-ceph.rbd.csi.ceph.com
+          annotations:
+            snapshot.storage.kubernetes.io/is-default-class: "true"
+          parameters:
+            clusterID: rook-ceph
+            csi.storage.k8s.io/snapshotter-secret-name: rook-csi-rbd-provisioner
+            csi.storage.k8s.io/snapshotter-secret-namespace: rook-ceph
+          deletionPolicy: Delete
+      serviceMonitor:
+        create: true
 
     resources:
       requests:
@@ -46,42 +47,3 @@ spec:
         memory: 36M
       limits:
         memory: 182M
----
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: snapshot-validation-webhook
-  namespace: kube-system
-spec:
-  interval: 30m
-  chart:
-    spec:
-      chart: snapshot-validation-webhook
-      version: 1.8.1
-      sourceRef:
-        kind: HelmRepository
-        name: piraeus
-        namespace: flux-system
-      interval: 30m
-  maxHistory: 2
-  install:
-    crds: Skip
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    crds: Skip
-    remediation:
-      retries: 3
-  uninstall:
-    keepHistory: false
-  dependsOn:
-    - name: snapshot-controller
-
-  values:
-    resources:
-      requests:
-        cpu: 10m
-        memory: 32M
-      limits:
-        memory: 118M
