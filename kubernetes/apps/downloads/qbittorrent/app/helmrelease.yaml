@@ -104,7 +104,7 @@ spec:
 
     sidecars:
       reannounce:
-        image: ghcr.io/buroa/qbittools:v0.10.0
+        image: ghcr.io/buroa/qbittools:v0.10.1
         imagePullPolicy: IfNotPresent
         args: ["reannounce", "-s", "localhost", "-p", "8080"]
         resources:
