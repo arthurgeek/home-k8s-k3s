@@ -82,14 +82,6 @@ spec:
         type: pvc
         existingClaim: photos
         mountPath: /usr/src/app/upload
-      geocoding-dump:
-        enabled: true
-        type: emptyDir
-        mountPath: /usr/src/app/.reverse-geocoding-dump
-      geoname-dump:
-        enabled: true
-        type: emptyDir
-        mountPath: /usr/src/app/node_modules/local-reverse-geocoder/geonames_dump
       transformers-cache:
         enabled: true
         type: emptyDir
