@@ -6,7 +6,7 @@ metadata:
   name: immich-db
   namespace: default
 spec:
-  instances: 1
+  instances: 2
   imageName: ghcr.io/bo0tzz/cnpgvecto.rs:15.5-v0.1.11
   primaryUpdateStrategy: unsupervised
   enableSuperuserAccess: true
