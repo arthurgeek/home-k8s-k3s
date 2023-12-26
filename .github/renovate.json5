@@ -7,12 +7,11 @@
     ":dependencyDashboard",
     ":semanticCommits",
     ":automergeDigest",
-    ":automergeBranch",
-    "helpers:pinGitHubActionDigests"
+    ":automergeBranch"
   ],
   "dependencyDashboard": true,
   "dependencyDashboardTitle": "Renovate Dashboard 🤖",
-  "suppressNotifications": ["prIgnoreNotification"],
+  "suppressNotifications": ["prEditedNotification", "prIgnoreNotification"],
   "rebaseWhen": "conflicted",
   "schedule": ["on saturday"],
   "flux": {
@@ -63,6 +62,26 @@
       "matchPackagePatterns": ["flux"],
       "matchDatasources": ["docker", "github-tags"],
       "versioning": "semver",
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": true
+    },
+    {
+      "description": "Local Path Provisioner Group",
+      "groupName": "Local Path Provisioner",
+      "matchPackagePatterns": ["local-path-provisioner"],
+      "matchDatasources": ["docker", "github-tags"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": true
+    },
+    {
+      "description": "System Upgrade Controller Group",
+      "groupName": "System Upgrade Controller",
+      "matchPackagePatterns": ["rancher/system-upgrade-controller"],
+      "matchDatasources": ["docker", "github-releases"],
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
       },
