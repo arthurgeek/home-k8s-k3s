@@ -50,6 +50,9 @@ spec:
       runAsUser: 1030
       runAsGroup: 100
 
+    podAnnotations:
+      setGateway: "true"
+
     resources:
       requests:
         memory: 250Mi
