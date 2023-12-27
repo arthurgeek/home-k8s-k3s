@@ -6,7 +6,6 @@ resources:
   - ./pvc.yaml
   - ./helmrelease.yaml
   - ./volsync.yaml
-  - ./qbittools-tagging
 labels:
   - pairs:
       app.kubernetes.io/name: qbittorrent
