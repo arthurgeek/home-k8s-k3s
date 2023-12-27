@@ -8,4 +8,5 @@ resources:
   - ./external-dns/ks.yaml
   - ./nginx/ks.yaml
   - ./k8s-gateway/ks.yaml
+  - ./unifi/ks.yaml
   - ./tailscale-subnet/ks.yaml
