@@ -21,20 +21,24 @@ spec:
   monitoring:
     enablePodMonitor: true
   bootstrap:
-    initdb:
+    recovery:
+      source: &previousCluster immich-db
       database: &app immich
       owner: *app
-      dataChecksums: true
-      postInitApplicationSQL:
-        - CREATE EXTENSION cube;
-        - CREATE EXTENSION earthdistance;
   postgresql:
     shared_preload_libraries:
       - "vectors.so"
   backup:
+    retentionPolicy: 30d
     barmanObjectStore:
+      data:
+        compression: bzip2
+      wal:
+        compression: bzip2
+        maxParallel: 8
       destinationPath: "s3://postgres"
       endpointURL: "http://minio.storage.svc.cluster.local:9000"
+      serverName: immich-db-v2
       s3Credentials:
         accessKeyId:
           name: immich-s3-secret
@@ -42,6 +46,19 @@ spec:
         secretAccessKey:
           name: immich-s3-secret
           key: S3_SECRET_KEY
+  externalClusters:
+    - name: *previousCluster
+      barmanObjectStore:
+        destinationPath: "s3://postgres"
+        endpointURL: "http://minio.storage.svc.cluster.local:9000"
+        s3Credentials:
+          accessKeyId:
+            name: immich-s3-secret
+            key: S3_ACCESS_KEY
+          secretAccessKey:
+            name: immich-s3-secret
+            key: S3_SECRET_KEY
+
 ---
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
