@@ -55,6 +55,7 @@ spec:
           secretKeyRef:
             name: immich-db-app
             key: password
+      SERVER_PORT: &port 3001
 
     envFrom:
       - secretRef:
@@ -66,7 +67,26 @@ spec:
       main:
         ports:
           http:
-            port: 3001
+            port: *port
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "internal"
+        annotations:
+          nignx.ingress.kubernetes.io/force-ssl-redirect: "true"
+          nginx.ingress.kubernetes.io/proxy-body-size: "0"
+          nginx.ingress.kubernetes.io/upstream-hash-by: "$client_ip"
+          hajimari.io/appName: Immich
+          hajimari.io/icon: heroicons:photo
+        hosts:
+          - host: &host "photos.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
 
     podSecurityContext:
       runAsUser: 1030
