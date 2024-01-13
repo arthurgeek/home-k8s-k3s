@@ -19,7 +19,7 @@ spec:
   values:
     image:
       repository: public.ecr.aws/docker/library/redis
-      tag: 7.2.3@sha256:a7cee7c8178ff9b5297cb109e6240f5072cdaaafd775ce6b586c3c704b06458e
+      tag: 7.2.4@sha256:94941d07e346aa093973476650b266d86d63c7f390d637012ada4f6a011f7c9b
 
     env:
       REDIS_REPLICATION_MODE: master
