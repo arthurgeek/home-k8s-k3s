@@ -35,7 +35,7 @@ spec:
     runner:
       image:
         repository: ghcr.io/arthurgeek/tf-runner-bitwarden
-        tag: sha-694356bc68fa2f7081ada8649c96e71fb2189142
+        tag: main@sha256:e4cc7c2d5b02a5fb5dd2ae63a6d2db8aa4e87e1ea026d4bf6842facc4cc6e438
 
     resources:
       requests:
