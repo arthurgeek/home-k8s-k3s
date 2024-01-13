@@ -14,7 +14,7 @@ terraform {
     }
 
     minio = {
-      source = "aminueza/minio"
+      source  = "aminueza/minio"
       version = "2.0.1"
     }
   }
@@ -29,5 +29,5 @@ locals {
 
 module "secrets_s3" {
   source = "./../modules/get-secret-item"
-  id = "d572f8f8-7927-4359-a427-ec6aa7ff2fbc"
+  id     = "d572f8f8-7927-4359-a427-ec6aa7ff2fbc"
 }
