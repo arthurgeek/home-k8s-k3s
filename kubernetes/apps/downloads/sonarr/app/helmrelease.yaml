@@ -23,7 +23,7 @@ spec:
 
     image:
       repository: ghcr.io/onedr0p/sonarr
-      tag: 4.0.1.929@sha256:f655ae59dfd9c75c798c04d08472deb2de61d8b13efac2735ff73d320ce7095b
+      tag: 4.0.2.1183@sha256:bbfcda0754272515ce12972924652699934074b46b11d27bc515c8ea5fb870f5
 
     podAnnotations:
       setGateway: "true"
