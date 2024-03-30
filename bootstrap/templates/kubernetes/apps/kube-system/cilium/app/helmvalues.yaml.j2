@@ -9,7 +9,7 @@ data:
   values.yaml: |
     autoDirectNodeRoutes: true
     bpf:
-      masquerade: true
+      masquerade: false
     bgp:
       enabled: false
     cluster:
@@ -64,8 +64,8 @@ data:
     ipv6:
       enabled: true
     {% endif %}
-    k8sServiceHost: "${KUBE_VIP_ADDR}"
-    k8sServicePort: 6443
+    k8sServiceHost: 127.0.0.1
+    k8sServicePort: 6444
     kubeProxyReplacement: true
     kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
     l2announcements:
@@ -73,10 +73,6 @@ data:
       enabled: false
       {% else %}
       enabled: true
-      # https://github.com/cilium/cilium/issues/26586
-      leaseDuration: 120s
-      leaseRenewDeadline: 60s
-      leaseRetryPeriod: 1s
       {% endif %}
     loadBalancer:
       algorithm: maglev
@@ -103,6 +99,6 @@ data:
       annotations:
         grafana_folder: Cilium
     rollOutCiliumPods: true
+    routingMode: native
     securityContext:
       privileged: true
-    tunnel: disabled
