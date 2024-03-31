@@ -14,6 +14,7 @@ metadata:
     pod-policies.kyverno.io/autogen-controllers: none
 spec:
   generateExistingOnPolicyUpdate: true
+  failurePolicy: Ignore
   rules:
     - name: remove-containers-cpu-limits
       match:
